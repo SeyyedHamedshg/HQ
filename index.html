@@ -11,7 +11,7 @@
 <style>
 /* ================= CONFIG & THEMES ================= */
 :root{
-  /* --- تم پیش‌فرض (مشکی مطلق و طلایی) --- */
+  /* --- تم پیش‌فرض (مشکی خالص و طلایی) --- */
   --bg: #000000; /* مشکی مطلق */
   --card-bg: linear-gradient(145deg, #121212 0%, #050505 100%); /* کارت خیلی تیره */
   --text: #eeeeee;
@@ -264,7 +264,7 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
     padding: 4px 8px; border-radius: 6px; background: var(--border); font-weight: 500; white-space: nowrap;
 }
 
-/* Status Widget */
+/* --- UPDATED: Sleep Status Widget --- */
 .status-widget {
     background: var(--glass); border: 1px solid var(--border); border-radius: 18px;
     padding: 15px; display: flex; flex-direction: column; justify-content: center;
@@ -272,6 +272,7 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
 }
 .status-icon {
     font-size: 28px; margin-bottom: 5px;
+    /* انیمیشن Zzz آرام برای خواب */
     animation: floatSleep 3s infinite ease-in-out;
 }
 .status-title { font-weight: 800; color: var(--text); font-size: 16px; }
@@ -333,65 +334,6 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
 .quote-author { display: block; margin-top: 15px; font-style: normal; font-weight: 700; color: var(--accent); font-size: 14px; }
 .quote-source { color: var(--muted); font-size: 11px; font-weight: 500; margin-top: 5px; }
 
-/* --- NEW: Game Section (Miner Game) --- */
-.game-section {
-    padding: 25px; margin-top: 30px; background: var(--card-bg); 
-    border: 1px solid var(--border); border-radius: var(--radius);
-}
-.game-header { text-align: right; margin-bottom: 20px; }
-.game-header h3 { margin: 0 0 5px; } /* استفاده از h3 موجود */
-
-.miner-game {
-    display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;
-}
-.miner-click-area {
-    flex-grow: 1; min-width: 250px; text-align: center; background: var(--glass);
-    border: 1px solid var(--border); border-radius: 16px; padding: 20px;
-    display: flex; flex-direction: column; align-items: center;
-}
-.miner-stats {
-    font-size: 14px; color: var(--muted); margin-bottom: 15px;
-}
-.miner-stats strong { font-size: 24px; color: var(--accent); display: block; margin-top: 5px; }
-
-#mine-btn {
-    width: 150px; height: 150px; border-radius: 50%; border: 4px solid var(--accent);
-    background: #000; color: var(--accent); font-size: 60px; font-weight: 900;
-    cursor: pointer; transition: all 0.1s ease; box-shadow: 0 0 20px var(--accent-glow);
-    animation: pulse 1.5s infinite;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 20px;
-}
-#mine-btn:active { transform: scale(0.95); box-shadow: 0 0 5px var(--accent-glow); animation: none; }
-@keyframes pulse { 0% { box-shadow: 0 0 20px var(--accent-glow); } 50% { box-shadow: 0 0 35px var(--accent-glow); } 100% { box-shadow: 0 0 20px var(--accent-glow); } }
-
-.miner-shop {
-    width: 100%; max-width: 300px; padding: 15px; border-radius: 16px;
-    background: var(--glass); border: 1px solid var(--border);
-}
-.shop-item {
-    padding: 10px; margin-bottom: 8px; border: 1px solid var(--border); border-radius: 10px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(0,0,0,0.1);
-}
-.shop-info { font-size: 13px; font-weight: 600; }
-.shop-cost { color: var(--accent); font-size: 14px; font-weight: bold; }
-.buy-btn {
-    background: var(--accent); color: #000; border: none; padding: 5px 12px;
-    border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px;
-    transition: opacity 0.2s;
-}
-.buy-btn:disabled { background: var(--muted); cursor: not-allowed; opacity: 0.5; color: #333; }
-.buy-btn:hover:not(:disabled) { opacity: 0.8; }
-
-.miner-reset { margin-top: 15px; }
-.miner-reset-btn {
-    font-size: 11px; color: #ff4d88; background: none; border: 1px dashed #ff4d8880;
-    padding: 5px 10px; border-radius: 5px; cursor: pointer; transition: 0.2s;
-}
-.miner-reset-btn:hover { background: rgba(255, 77, 136, 0.1); }
-
-
 </style>
 </head>
 <body class="">
@@ -442,54 +384,9 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
         <span class="quote-author" id="random-quote-author"></span>
         <span class="quote-source" id="random-quote-source"></span>
     </div>
-    <div class="game-section fade-in" style="animation-delay:0.25s">
-        <div class="game-header">
-            <h3>🎮 اتاق تحلیل</h3>
-            <p style="font-size:14px; color:var(--muted); margin-top:5px;">اینجا می‌تونیم در آینده بازی‌های دیگه‌ای رو اضافه کنیم!</p>
-        </div>
-        
-        <div class="miner-game">
-            
-            <div class="miner-click-area">
-                <div class="miner-stats">
-                    ساتوشی‌های موجود (BTC): <strong id="satoshi-count">0</strong>
-                    <span style="font-size: 14px; font-weight: 500; display: block; margin-top: 10px; color: var(--muted);">سرعت ماینینگ: <span id="satoshi-per-sec">0</span> ساتوشی/ثانیه</span>
-                </div>
-                
-                <button id="mine-btn" title="برای ماین کلیک کن">⛏️</button>
-                
-                <div class="miner-reset">
-                    <button class="miner-reset-btn" onclick="resetGame()">شروع مجدد بازی (ریست)</button>
-                </div>
-            </div>
-            
-            <div class="miner-shop">
-                <h4 style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 10px;">فروشگاه ارتقا</h4>
-                
-                <div class="shop-item">
-                    <div class="shop-info">💻 کارت گرافیک معمولی (+10/ثانیه)</div>
-                    <div class="shop-cost"><span id="gpu1-cost">100</span> ساتوشی</div>
-                    <button class="buy-btn" id="buy-gpu1" data-cost="100" data-sps="10">خرید</button>
-                </div>
-                
-                <div class="shop-item">
-                    <div class="shop-info">⚡ سرور ابری (+50/ثانیه)</div>
-                    <div class="shop-cost"><span id="gpu2-cost">500</span> ساتوشی</div>
-                    <button class="buy-btn" id="buy-gpu2" data-cost="500" data-sps="50">خرید</button>
-                </div>
-                
-                <div class="shop-item">
-                    <div class="shop-info">🛰️ دیتاسنتر کوانتومی (+200/ثانیه)</div>
-                    <div class="shop-cost"><span id="gpu3-cost">2000</span> ساتوشی</div>
-                    <button class="buy-btn" id="buy-gpu3" data-cost="2000" data-sps="200">خرید</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
     <div class="grid-layout">
       
-      <div class="right-col fade-in" style="animation-delay:0.3s">
+      <div class="right-col fade-in" style="animation-delay:0.25s">
         <h3>ارتباط با من</h3>
         
         <a href="https://t.me/HamiWorkHQ" target="_blank" class="link-box">
@@ -537,7 +434,7 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
 
         </div>
         
-        <div class="birthday-widget fade-in" style="animation-delay:0.35s">
+        <div class="birthday-widget fade-in" style="animation-delay:0.3s">
           <div class="birthday-title">🗓️ تولد بزرگان اقتصاد</div>
           <div id="economist-birthdays"></div>
         </div>
@@ -584,7 +481,7 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
 
       </div>
 
-      <div class="left-col fade-in" style="animation-delay:0.4s">
+      <div class="left-col fade-in" style="animation-delay:0.35s">
         
         <h3>نوشته‌های خودمونی</h3>
         <div id="articles">
@@ -678,9 +575,9 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
 
     <div class="footer">
       <span>© 2025 HamiWorkHQ — Designed by Hamed</span>
-      <span class="footer-version">V1.5</span>
+      <span class="footer-version">V1.4</span>
       <span style="font-size: 11px;">
-        Last Update: <strong style="color: var(--text);">۳ آذر ۱۴۰۴</strong> 
+        Last Update: <strong style="color: var(--text);">۳۰ آبان ۱۴۰۴</strong> 
       </span>
     </div>
 
@@ -700,10 +597,9 @@ h3::before{ content:''; display:block; width:8px; height:8px; background:var(--a
 const THEMES = ['', 'theme-oceanic', 'theme-rose', 'theme-forest', 'theme-vapor'];
 let currentThemeIndex = 0;
 
-// UPDATED: Bio Text
 const TYPING_TEXTS = {
-  fa: "اینجا اتاق بازجویی از داده‌هاست! 🕵️‍♂️ من حامدم و قراره با هم ببینیم تو عمق بازار چه خبره.",
-  en: "Welcome to the data interrogation room! 🕵️‍♂️ I'm Hamed, let's see what's happening deep in the market."
+  fa: "این یه سایت کوچیک و شخصیه که خودم با HTML ساختمش. هدفم اینه که خیلی ساده و خودمونی درباره داده‌ها و اقتصاد گپ بزنیم.",
+  en: "This is a personal site I built with HTML. My goal is to chat about data and economics in a simple, friendly way."
 };
 
 const ECONOMISTS = [
@@ -797,9 +693,6 @@ langBtn.addEventListener('click', () => {
     h3s[0].textContent = "ارتباط با من"; h3s[1].textContent = "مهارت‌ها (تکنیکال)";
     h3s[2].textContent = "نوشته‌های خودمونی"; h3s[3].textContent = "نکات کاربردی (Mini-Tutorials)"; h3s[4].textContent = "گالری پروژه‌ها";
   }
-  document.querySelector('.game-header h3').textContent = isFa ? "🎮 اتاق تحلیل" : "🎮 Analysis Room";
-  document.querySelector('.game-header p').textContent = isFa ? "اینجا می‌تونیم در آینده بازی‌های دیگه‌ای رو اضافه کنیم!" : "We can add more games to this section in the future!";
-  document.getElementById('satoshi-per-sec').parentNode.innerHTML = isFa ? 'سرعت ماینینگ: <span id="satoshi-per-sec"></span> ساتوشی/ثانیه' : 'Mining Speed: <span id="satoshi-per-sec"></span> Satoshi/sec';
 });
 
 // 5. آکاردئون
@@ -882,125 +775,7 @@ function displayRandomQuote() {
     document.getElementById('random-quote-source').innerHTML = `(${q.source})`;
 }
 
-// ============ MINER GAME LOGIC ============
-const MINE_BTN = document.getElementById('mine-btn');
-const SATOSHI_COUNT_EL = document.getElementById('satoshi-count');
-const SPS_EL = document.getElementById('satoshi-per-sec');
-
-let satoshi = 0;
-let satoshiPerClick = 1;
-let satoshiPerSecond = 0;
-let autoMineInterval;
-
-const UPGRADES = [
-    { id: 'gpu1', name: 'کارت گرافیک معمولی', baseCost: 100, sps: 10 },
-    { id: 'gpu2', name: 'سرور ابری', baseCost: 500, sps: 50 },
-    { id: 'gpu3', name: 'دیتاسنتر کوانتومی', baseCost: 2000, sps: 200 }
-];
-
-let inventory = UPGRADES.reduce((acc, upgrade) => {
-    acc[upgrade.id] = { count: 0, cost: upgrade.baseCost };
-    return acc;
-}, {});
-
-function updateStats() {
-    satoshiPerSecond = UPGRADES.reduce((total, upgrade) => {
-        return total + (upgrade.sps * inventory[upgrade.id].count);
-    }, 0);
-
-    SATOSHI_COUNT_EL.textContent = Math.floor(satoshi).toLocaleString('fa-IR');
-    SPS_EL.textContent = satoshiPerSecond.toLocaleString('fa-IR');
-    saveGame(); 
-    checkButtons();
-}
-
-function mine(amount = satoshiPerClick) {
-    satoshi += amount;
-    updateStats();
-}
-
-function autoMine() {
-    satoshi += satoshiPerSecond / 10; // هر 100 میلی ثانیه 1/10 از مقدار SPS اضافه میشه
-    updateStats();
-}
-
-function buyUpgrade(upgradeId) {
-    const item = inventory[upgradeId];
-    const upgradeConfig = UPGRADES.find(u => u.id === upgradeId);
-    
-    if (satoshi >= item.cost) {
-        satoshi -= item.cost;
-        item.count += 1;
-        
-        // محاسبه قیمت جدید: هر خرید 15% قیمت رو افزایش میده
-        item.cost = Math.floor(upgradeConfig.baseCost * Math.pow(1.15, item.count));
-        
-        // بروزرسانی دکمه و نمایش
-        document.getElementById(`${upgradeId}-cost`).textContent = item.cost.toLocaleString('fa-IR');
-        updateStats();
-    }
-}
-
-function checkButtons() {
-    UPGRADES.forEach(upgrade => {
-        const btn = document.getElementById(`buy-${upgrade.id}`);
-        if (btn) {
-            btn.disabled = satoshi < inventory[upgrade.id].cost;
-        }
-    });
-}
-
-function saveGame() {
-    const gameState = { satoshi: satoshi, inventory: inventory };
-    localStorage.setItem('minerGame', JSON.stringify(gameState));
-}
-
-function loadGame() {
-    const savedState = localStorage.getItem('minerGame');
-    if (savedState) {
-        const gameState = JSON.parse(savedState);
-        satoshi = gameState.satoshi;
-        inventory = gameState.inventory;
-        // بروزرسانی قیمت ها در فروشگاه پس از لود
-        UPGRADES.forEach(upgrade => {
-            document.getElementById(`${upgrade.id}-cost`).textContent = inventory[upgrade.id].cost.toLocaleString('fa-IR');
-        });
-    }
-}
-
-function resetGame() {
-    if (confirm("آیا مطمئن هستید؟ تمام پیشرفت شما پاک خواهد شد!")) {
-        satoshi = 0;
-        inventory = UPGRADES.reduce((acc, upgrade) => {
-            acc[upgrade.id] = { count: 0, cost: upgrade.baseCost };
-            return acc;
-        }, {});
-        // ریست قیمت های نمایش داده شده
-        UPGRADES.forEach(upgrade => {
-            document.getElementById(`${upgrade.id}-cost`).textContent = upgrade.baseCost.toLocaleString('fa-IR');
-        });
-        updateStats();
-        clearInterval(autoMineInterval);
-        autoMineInterval = setInterval(autoMine, 100);
-        localStorage.removeItem('minerGame');
-    }
-}
-
-
-MINE_BTN.addEventListener('click', () => mine(satoshiPerClick));
-document.getElementById('buy-gpu1').addEventListener('click', () => buyUpgrade('gpu1'));
-document.getElementById('buy-gpu2').addEventListener('click', () => buyUpgrade('gpu2'));
-document.getElementById('buy-gpu3').addEventListener('click', () => buyUpgrade('gpu3'));
-
-
-// ============ Initialization ============
 document.addEventListener('DOMContentLoaded', () => {
-  // Load & Init Game
-  loadGame(); 
-  updateStats();
-  autoMineInterval = setInterval(autoMine, 100);
-
-  // Other Inits
   updateClock(); setInterval(updateClock, 1000);
   fetchCryptoPrices(); setInterval(fetchCryptoPrices, 30000);
   renderBirthdays(); displayRandomQuote();
